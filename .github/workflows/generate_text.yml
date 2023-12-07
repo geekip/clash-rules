@@ -28,3 +28,4 @@ jobs:
         git add generated_text.txt
         git commit -m "Generate text file for $(date)"
         git push
+        git push https://github-actions:${{ secrets.TOKEN }}@github.com/anuny/test.git
