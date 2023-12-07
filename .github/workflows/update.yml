@@ -99,3 +99,10 @@ jobs:
           git add .
           git commit -m "auto update"
           git push -f origin dist
+          
+      - name: Purge jsdelivr CDN
+        run: |
+          cd dist || exit 1
+          for file in $(ls); do
+            curl -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@dist/${file}"
+          done
