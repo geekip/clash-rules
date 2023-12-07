@@ -28,7 +28,7 @@ jobs:
           echo "reject=https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt" >> $GITHUB_ENV
         shell: bash
         
-      - name: Step 1 - Checkout
+      - name: Checkout
         uses: actions/checkout@v3.1.0
 
       - name: Generate apple.txt file
@@ -85,7 +85,7 @@ jobs:
           echo "payload:" > reject.yaml
           curl -sSL ${Loyalsoldier_reject} | grep -Ev "^(regexp|keyword):" | perl -ne '/^(domain:|full:)?([-_a-zA-Z0-9]+(\.[-_a-zA-Z0-9]+)*)/ && print "  - |+.$2|\n"' | sed "s/|/'/g" >> reject.yaml
     
-      - name: Move files to publish directory
+      - name: Move files to dist directory
         run: |
           mkdir -p dist
           cp *.yaml ./dist/
