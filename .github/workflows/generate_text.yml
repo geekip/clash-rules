@@ -5,10 +5,7 @@ on:
   schedule:
     - cron: '0 6 * * *' # 每天早上6点触发
   push:
-    branches:
-      - main
-    paths-ignore:
-      - "**/README.md"
+    branches: [main]
 
 jobs:
   generate_text:
@@ -27,5 +24,4 @@ jobs:
         git config user.email "yangfei88@live.cn"
         git add generated_text.txt
         git commit -m "update"
-        git remote add origin "https://${{ github.actor }}:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}"
-        git push
+        git push --force
