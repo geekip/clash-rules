@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.1.0
 
-      - name: Generate apple.txt file
+      - name: Generate apple.yaml file
         run: |
           echo "payload:" > apple.yaml
           curl -sSL ${cn_apple} | perl -ne '/^server=\/([^\/]+)\// && print "  - |+.$1|\n"' | sed "s/|/'/g" >> apple.yaml
@@ -49,8 +49,7 @@ jobs:
       - name: Generate cncidr.yaml file
         run: |
           echo "payload:" > cncidr.yaml
-          curl -sSL ${cn_cidr} | perl -ne '/(.+\/\d+)/ && print "  - |$1|\n"' | sed "s/|/'/g" >> cncidr.yaml
-          
+          curl -sSL ${cn_cidr} | perl -ne '/(.+\/\d+)/ && print "  - |$1|\n"' | sed "s/|/'/g" >> cncidr.yaml  
 
       - name: Generate lancidr.yaml file
         run: |
@@ -59,7 +58,7 @@ jobs:
 
       - name: Generate direct.yaml file
         run: |
-          echo "payload:" > direct.txt
+          echo "payload:" > direct.yaml
           curl -sSL ${direct} | grep -Ev "^(regexp|keyword):" | perl -ne '/^(full:)([-_a-zA-Z0-9]+(\.[-_a-zA-Z0-9]+)*)/ && print "  - |$2|\n"' | sed "s/|/'/g" >> direct.yaml
           curl -sSL ${direct} | grep -Ev "^(regexp|keyword|full):" | perl -ne '/^(domain:)?([-_a-zA-Z0-9]+(\.[-_a-zA-Z0-9]+)*)/ && print "  - |+.$2|\n"' | sed "s/|/'/g" >> direct.yaml
 
