@@ -10,21 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '14'
 
     - name: Generate Text File
       run: echo "当前时间：$(date)" > generated_text.txt
 
     - name: Commit and Push
       run: |
+        git init
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Actions"
         git add generated_text.txt
         git commit -m "Generate text file for $(date)"
-        git push
+        git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+        git push origin main
