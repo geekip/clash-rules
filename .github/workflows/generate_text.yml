@@ -29,5 +29,4 @@ jobs:
         git checkout -b dist
         git add generated_text.txt
         git commit -m "Auto update"
-        git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
         git push -f origin dist
