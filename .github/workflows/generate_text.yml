@@ -1,30 +1,29 @@
-name: Auto update
+name: Generate and Commit Text
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '37 19 * * *'
+    - cron: '0 6 * * *' # 每天早上6点触发
 
 jobs:
-  update:
+  generate_text:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.TOKEN }}
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - uses: petronny/git-config-user@master
-        with:
-          path: .
-          
-      - name: Generate Text File
-        run: echo "当前时间：$(date)" > generated_text.txt
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '14'
 
-      - name: Commit and Push
-        run: |
-          set -x
-          git add generated_text.txt
-          git commit -m "[$(LANG=C date)] auto update" || exit 0
-          [ -n "${{ secrets.TOKEN }}" ] && git show && exit 0
-          git push origin main
+    - name: Generate Text File
+      run: echo "当前时间：$(date)" > generated_text.txt
+
+    - name: Commit and Push
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        git add generated_text.txt
+        git commit -m "Generate text file for $(date)"
+        git push
