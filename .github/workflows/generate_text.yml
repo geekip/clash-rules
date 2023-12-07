@@ -20,8 +20,8 @@ jobs:
 
     - name: Commit and Push
       run: |
-        git config user.name "anuny"
-        git config user.email "yangfei88@live.cn"
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
         git add generated_text.txt
-        git commit -m "update"
-        git push --force
+        git commit -m "Generate text file for $(date)"
+        git push https://${{ github.actor }}:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}
