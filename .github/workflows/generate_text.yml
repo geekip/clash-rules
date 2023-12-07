@@ -22,4 +22,4 @@ jobs:
         git add generated_text.txt
         git commit -m "Generate text file for $(date)"
         git remote add origin "https://${{ github.actor }}:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}"
-        git push origin main
+        git push
