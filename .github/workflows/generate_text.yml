@@ -6,7 +6,7 @@ on:
     - cron: '0 6 * * *' # 每天早上6点触发
   push:
     branches: 
-      - master
+      - main
     paths-ignore:
       - "**/README.md"
 
