@@ -1,11 +1,14 @@
 name: Generate and Commit Text
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
   schedule:
     - cron: '0 6 * * *' # 每天早上6点触发
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**/README.md"
 
 jobs:
   generate_text:
@@ -22,6 +25,8 @@ jobs:
       run: |
         git config user.name "anuny"
         git config user.email "yangfei88@live.cn"
+        git checkout -b main
         git add generated_text.txt
         git commit -m "update"
-        git push --force
+        git remote add origin "https://${{ github.actor }}:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}"
+        git push -f origin main
