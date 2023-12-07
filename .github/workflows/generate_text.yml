@@ -5,7 +5,10 @@ on:
   schedule:
     - cron: '0 6 * * *' # 每天早上6点触发
   push:
-    branches: [main]
+    branches: 
+      - master
+    paths-ignore:
+      - "**/README.md"
 
 jobs:
   generate_text:
@@ -22,7 +25,7 @@ jobs:
       run: |
         git init
         git config --local user.name "github-actions[bot]"
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git checkout -b dist
         git add generated_text.txt
         git commit -m "Auto update"
