@@ -23,7 +23,8 @@ jobs:
         git init
         git config --local user.name "github-actions[bot]"
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git checkout -b dist
         git add generated_text.txt
         git commit -m "Auto update"
-        git remote add origin "https://${{ github.actor }}:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}"
-        git push -f origin main
+        git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+        git push -f origin dist
