@@ -10,22 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '14'
+    - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+    - uses: petronny/git-config-user@master
+        with:
+          path: .
 
     - name: Generate Text File
       run: echo "当前时间：$(date)" > generated_text.txt
 
     - name: Commit and Push
       run: |
-        git config --local user.email "actions@github.com"
-        git config --local user.name "GitHub Actions"
+        set -x
         git add generated_text.txt
         git commit -m "Generate text file for $(date)"
-        git push
-        git push https://github-actions:${{ secrets.TOKEN }}@github.com/anuny/test.git
+        [ -n "${{ secrets.READ_ONLY }}" ] && git show && exit 0
+        git push origin main
