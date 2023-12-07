@@ -1,6 +1,7 @@
 name: Generate and Commit Text
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 6 * * *' # 每天早上6点触发
 
