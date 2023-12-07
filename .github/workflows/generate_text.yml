@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
 
       - uses: petronny/git-config-user@master
         with:
@@ -26,5 +26,5 @@ jobs:
           set -x
           git add generated_text.txt
           git commit -m "[$(LANG=C date)] auto update" || exit 0
-          [ -n "${{ secrets.READ_ONLY }}" ] && git show && exit 0
+          [ -n "${{ secrets.TOKEN }}" ] && git show && exit 0
           git push origin main
