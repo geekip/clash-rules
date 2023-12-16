@@ -83,7 +83,15 @@ jobs:
         run: |
           echo "payload:" > reject.yaml
           curl -sSL ${reject} | grep -Ev "^(regexp|keyword):" | perl -ne '/^(domain:|full:)?([-_a-zA-Z0-9]+(\.[-_a-zA-Z0-9]+)*)/ && print "  - |+.$2|\n"' | sed "s/|/'/g" >> reject.yaml
-    
+
+      - name: Generate openai.yaml file
+        run: |
+          echo "payload:" > openai.yaml
+          echo "  - '+.openai.com'" >> openai.yaml
+          echo "  - '+.claude.ai'" >> openai.yaml
+          echo "  - '+.oaistatic.com'" >> openai.yaml
+          echo "  - '+.oaiusercontent.com'" >> openai.yaml
+          
       - name: Move files to dist directory
         run: |
           mkdir -p dist
